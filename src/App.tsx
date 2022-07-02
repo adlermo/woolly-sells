@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import './App.css';
+import Authenticate from './components/Authenticate';
 
-import LoginGoogle from './components/LoginGoogle';
+import OAuthService from './services/OAuthService';
 
 function App() {
+  const service = new OAuthService();
+
+  const user = useState(service.getUser());
+
   return (
     <>
-      <h1 className="text-3xl font-bold">Hello world!</h1>
-      <h2>{process.env.NODE_ENV}</h2>
-      <h2>{process.env.CLIENT_ID}</h2>
-      <LoginGoogle></LoginGoogle>
+      <Routes>
+        <Route index element={<Authenticate />} />
+        <Route path="login" element={<Authenticate />} />
+      </Routes>
     </>
   );
 }
