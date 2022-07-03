@@ -7,8 +7,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { CardActionArea } from '@mui/material';
 
-import SignInButton from './SignInButton';
-import SignUpButton from './SignUpButton';
+import SignButton from '../components/SignButton';
 
 function Authenticate() {
   return (
@@ -17,7 +16,7 @@ function Authenticate() {
         <CardMedia
           component="img"
           height="400"
-          image="../images/sheep_black.svg"
+          image="../sheep_black.svg"
           alt="black sheep vector"
         />
         <CardContent>
@@ -30,8 +29,10 @@ function Authenticate() {
             Welcome to Woolly-Sells
           </Typography>
           <Stack spacing={2} direction="column" textAlign={'center'}>
-            <SignInButton />
-            <SignUpButton />
+            {/* <SignButton text={'Sign In'} /> */}
+            <SignButton />
+            {/* <SignButton text={'Sign Up'} /> */}
+            <SignButton />
             Don't have an account?
           </Stack>
         </CardContent>

@@ -1,22 +1,14 @@
-import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React from 'react';
 
-import Authenticate from './components/Authenticate';
+import { UserProvider } from './context/UserContext';
 
-import OAuthService from './services/OAuthService';
+import Routes from './routes/index';
 
 function App() {
-  const service = new OAuthService();
-
-  const user = useState(service.getUser());
-
   return (
-    <>
-      <Routes>
-        <Route index element={<Authenticate />} />
-        <Route path="login" element={<Authenticate />} />
-      </Routes>
-    </>
+    <UserProvider>
+      <Routes></Routes>
+    </UserProvider>
   );
 }
 
