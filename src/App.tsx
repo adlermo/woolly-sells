@@ -6,6 +6,7 @@ import { Routes, Navigate, Route } from 'react-router-dom';
 
 import Authenticate from './pages/Authenticate';
 import Home from './pages/Home';
+import Header from './components/Header';
 
 function App() {
   const defaultProtectedRouteProps: Omit<ProtectedRouteProps, 'outlet'> = {
@@ -14,13 +15,14 @@ function App() {
   };
 
   return (
-    <div>
+    <>
+      <Header></Header>
       <UserProvider>
         <Routes>
           <Route path="login" element={<Authenticate />} />
 
           <Route
-            path="/"
+            path="/*"
             element={
               <ProtectedRoute
                 {...defaultProtectedRouteProps}
@@ -30,7 +32,7 @@ function App() {
           />
         </Routes>
       </UserProvider>
-    </div>
+    </>
   );
 }
 
@@ -46,6 +48,8 @@ function ProtectedRoute({
   outlet,
 }: ProtectedRouteProps) {
   const { signed } = useAuth();
+
+  console.info(`signed value: ${signed}`);
 
   if (signed) {
     return outlet;

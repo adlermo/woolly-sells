@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-const Home: React.FC = () => (
-  <>
-    <p color="white">Hello, Peter!</p>
-  </>
-);
+import { Route, Routes } from 'react-router-dom';
+
+const Home: React.FC = () => {
+  return (
+    <Routes>
+      <Route path="*" element={<p color="white">Hey!</p>} />
+
+      <Route></Route>
+    </Routes>
+  );
+};
 
 export default Home;
