@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import { CardActionArea } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 import SignButton from '../components/SignButton';
 
@@ -29,10 +29,8 @@ function Authenticate() {
             Welcome to Woolly-Sells
           </Typography>
           <Stack spacing={2} direction="column" textAlign={'center'}>
-            {/* <SignButton text={'Sign In'} /> */}
-            <SignButton />
-            {/* <SignButton text={'Sign Up'} /> */}
-            <SignButton />
+            <SignButton text={'Sign In'} />
+            <SignButton text={'Sign Up'} />
             Don't have an account?
           </Stack>
         </CardContent>

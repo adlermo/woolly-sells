@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import { useGoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
@@ -8,13 +14,13 @@ const clientId = `537172157090-ptad5abghsvohc1303953uu9ng47p7h2.apps.googleuserc
 interface User {
   signed: boolean;
   user: object | null;
-  Login(): Promise<void>;
+  Login(): void;
   Logout(): void;
 }
 
 const UserContext = createContext({} as User);
 
-export const UserProvider: React.FC = ({ children }) => {
+export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<object | null>(null);
 
   useEffect(() => {
@@ -25,18 +31,19 @@ export const UserProvider: React.FC = ({ children }) => {
       });
     }
 
-    console.info('Run useEffect');
-
     gapi.load('client:auth2', start);
-  }, []);
+  });
 
   const onSuccess = (res: any) => {
-    console.info('Login Success: currentUser:', res.profileObj);
-    console.info(`Welcome ${res.profileObj.name} 😍.`);
+    const { profileObj } = res;
+
+    console.info('Login Success: currentUser:', profileObj);
+    setUser(profileObj);
   };
 
   const onFailure = (res: any) => {
     console.error('Login failed: res:', res);
+    setUser(null);
   };
 
   const { signIn } = useGoogleLogin({
@@ -46,8 +53,8 @@ export const UserProvider: React.FC = ({ children }) => {
     isSignedIn: false,
   });
 
-  async function Login() {
-    let result = signIn();
+  function Login() {
+    signIn();
   }
 
   function Logout() {

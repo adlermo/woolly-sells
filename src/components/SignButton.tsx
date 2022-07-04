@@ -4,19 +4,22 @@ import { useAuth } from '../context/UserContext';
 
 import Button from '@mui/material/Button';
 
-const SignButton: React.FC = () => {
+const SignButton: React.FC<any> = (props) => {
   const { signed, Login } = useAuth();
 
   const handleSignIn = () => {
-    console.info('SignButton Clicado');
+    console.info(`${props.text} clicked`);
     Login();
 
     console.info(signed);
   };
 
   return (
-    <Button onClick={handleSignIn} variant="outlined">
-      Sign Up
+    <Button
+      onClick={handleSignIn}
+      variant={props.text === 'Sign Up' ? 'contained' : 'outlined'}
+    >
+      {props.text}
     </Button>
   );
 };
