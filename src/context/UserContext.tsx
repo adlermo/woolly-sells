@@ -9,12 +9,14 @@ import React, {
 import { useGoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
 
+import { useNavigate } from 'react-router-dom';
+
 const clientId = `537172157090-ptad5abghsvohc1303953uu9ng47p7h2.apps.googleusercontent.com`;
 
 interface User {
   signed: boolean;
   user: object | null;
-  Login(): void;
+  Login(): Promise<void>;
   Logout(): void;
 }
 
@@ -22,6 +24,7 @@ const UserContext = createContext({} as User);
 
 export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<object | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     function start() {
@@ -39,6 +42,9 @@ export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
     console.info('Login Success: currentUser:', profileObj);
     setUser(profileObj);
+
+    // Navigating to home after authentication
+    navigate('/', { replace: true });
   };
 
   const onFailure = (res: any) => {
@@ -53,8 +59,8 @@ export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
     isSignedIn: false,
   });
 
-  function Login() {
-    signIn();
+  async function Login() {
+    return Promise.resolve(signIn());
   }
 
   function Logout() {

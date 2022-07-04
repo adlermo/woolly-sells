@@ -5,13 +5,11 @@ import { useAuth } from '../context/UserContext';
 import Button from '@mui/material/Button';
 
 const SignButton: React.FC<any> = (props) => {
-  const { signed, Login } = useAuth();
+  const { Login } = useAuth();
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     console.info(`${props.text} clicked`);
-    Login();
-
-    console.info(signed);
+    await Login();
   };
 
   return (
