@@ -40,7 +40,7 @@ const ProductsList: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       const { data } = await service.get('/products', {
-        params: { user_id: 5 },
+        params: { user_id: 1 },
         // TODO change hard coded user_id by GoogleUserId
       });
 

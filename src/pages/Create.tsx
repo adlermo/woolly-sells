@@ -58,7 +58,7 @@ const Create: React.FC = () => {
         <input
           type="hidden"
           id="user_id"
-          defaultValue={5}
+          defaultValue={1}
           placeholder="Product's User Id Owner"
           {...register('user_id')}
         />

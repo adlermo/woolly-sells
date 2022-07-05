@@ -13,23 +13,17 @@ const SignButton: React.FC<any> = (props) => {
 
   const handleSignIn = async () => {
     console.info(`${props.text} clicked`);
+
     await Login();
+
+    // Triggering user creation
+    if (props.text === 'Sign Up' && user) await createUser(user);
   };
 
-  useEffect(() => {
-    console.log(props.text);
-    console.log(user);
-    if (props.text === 'Sign Up' && user) createUser(user);
-  });
-
-  const createUser = (user: User | null) => {
-    const postUser = async (user: User | null) => {
-      const response = await service.post('users', user);
-      console.info('Create user response');
-      console.info(response);
-    };
-
-    if (user) postUser(user).catch((err) => console.error(err));
+  const createUser = async (user: User | null) => {
+    const response = await service.post('users', user);
+    console.info('Create user response');
+    console.info(response);
   };
 
   return (
