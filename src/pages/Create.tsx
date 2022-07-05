@@ -59,6 +59,7 @@ const Create: React.FC = () => {
           type="hidden"
           id="user_id"
           defaultValue={1}
+          // defaultValue={user?.googleId}
           placeholder="Product's User Id Owner"
           {...register('user_id')}
         />

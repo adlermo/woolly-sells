@@ -61,7 +61,8 @@ export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
   });
 
   async function Login() {
-    return Promise.resolve(signIn());
+    signIn();
+    return Promise.resolve();
   }
 
   function Logout() {
