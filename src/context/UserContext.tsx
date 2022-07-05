@@ -35,16 +35,17 @@ export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
 
     gapi.load('client:auth2', start);
-  });
+  }, []);
 
   const onSuccess = (res: any) => {
     const { profileObj } = res;
 
     console.info('Login Success: currentUser:', profileObj);
     setUser(profileObj);
+    
 
     // Navigating to home after authentication
-    navigate('/', { replace: true });
+    navigate('/products', { replace: true });
   };
 
   const onFailure = (res: any) => {

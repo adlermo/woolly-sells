@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
@@ -8,11 +9,15 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import SignButton from '../components/SignButton';
-import { Box } from '@mui/material';
 
 function Authenticate() {
   return (
-    <Box display="flex" justifyContent="center" alignItems="center">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      marginTop="1.2em"
+    >
       <Card sx={{ maxWidth: 450 }} variant="outlined">
         <CardActionArea>
           <CardMedia

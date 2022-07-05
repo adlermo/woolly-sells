@@ -5,69 +5,102 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuIcon from '@mui/icons-material/Menu';
+
 import { useAuth } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
-  const { signed } = useAuth();
+  const navigate = useNavigate();
+
+  const context = useAuth();
+  const [nav, setNav] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   // Trying to get authentication event by context
   useEffect(() => {
-    if (signed) {
-      console.info(`new value ${signed}`);
+    if (context) {
+      console.info(`signed ${context.signed}`);
+      console.info(`user ${context.user}`);
     }
-  }, [signed]);
+  }, [context]);
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigateCreate = (event: React.MouseEvent<HTMLElement>) => {
+    closeNav();
+    navigate('products/create');
+  };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.info(event.target.checked);
+  const navigateList = (): void => {
+    closeNav();
+    navigate('products');
   };
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleNav = (event: React.MouseEvent<HTMLElement>) => {
+    setNav(event.currentTarget);
+  };
+
+  const handleClose = (): void => {
     setAnchorEl(null);
+  };
+
+  const closeNav = (): void => {
+    setNav(null);
+  };
+
+  const handleLogout = (): void => {
+    handleClose();
+    context.Logout();
   };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={signed}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={signed ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {context.signed && (
+            <div>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={handleNav}
+                sx={{ mr: 2 }}
+              >
+                <MenuIcon />
+              </IconButton>
+
+              <Menu
+                id="menu-appbar"
+                anchorEl={nav}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(nav)}
+                onClose={closeNav}
+              >
+                <MenuItem onClick={navigateCreate}>Create Product</MenuItem>
+                <MenuItem onClick={navigateList}>List Products</MenuItem>
+              </Menu>
+            </div>
+          )}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Woolly-Sells - {`Home`}
+            Woolly-Sells - Your products manager
           </Typography>
-          {signed && (
+          {context.signed && (
             <div>
               <IconButton
                 size="large"
@@ -95,8 +128,7 @@ const Header: React.FC = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>
           )}

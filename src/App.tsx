@@ -6,6 +6,7 @@ import { Routes, Navigate, Route } from 'react-router-dom';
 
 import Authenticate from './pages/Authenticate';
 import Home from './pages/Home';
+
 import Header from './components/Header';
 
 function App() {
@@ -16,13 +17,13 @@ function App() {
 
   return (
     <>
-      <Header></Header>
       <UserProvider>
+        <Header></Header>
         <Routes>
           <Route path="login" element={<Authenticate />} />
 
           <Route
-            path="/*"
+            path="products/*"
             element={
               <ProtectedRoute
                 {...defaultProtectedRouteProps}
@@ -48,8 +49,6 @@ function ProtectedRoute({
   outlet,
 }: ProtectedRouteProps) {
   const { signed } = useAuth();
-
-  console.info(`signed value: ${signed}`);
 
   if (signed) {
     return outlet;
