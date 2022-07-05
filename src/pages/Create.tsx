@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuth } from '../context/UserContext';
 import { Product } from '../interfaces/product';
 
-import productService from '../services/products';
+import service from '../services/service';
 
 const Create: React.FC = () => {
   const { user } = useAuth();
@@ -17,7 +17,7 @@ const Create: React.FC = () => {
   } = useForm<Product>();
 
   const post = async (product: Product) => {
-    return await productService.post('/products', product);
+    return await service.post('/products', product);
   };
 
   const Container = styled('div')(({ theme }) => ({
@@ -28,7 +28,7 @@ const Create: React.FC = () => {
 
   const onSubmit: SubmitHandler<Product> = (data: Product) => {
     console.log(data);
-    post(data).then((res) => console.info(res));
+    post(data).then((res) => alert(res.statusText));
   };
 
   return (

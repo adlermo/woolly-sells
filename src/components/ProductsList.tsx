@@ -14,10 +14,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import React, { useEffect, useState } from 'react';
-import productService from '../services/products';
+import service from '../services/service';
 
 import { Product } from '../interfaces/product';
-import { Navigate } from 'react-router-dom';
 
 const ProductsList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -28,18 +27,21 @@ const ProductsList: React.FC = () => {
     margin: 20,
   }));
 
-  const updateProduct = () => {
-    return <Navigate to={'products/create'} />;
+  const updateProduct = (e: any) => {
+    console.log(e.target);
+    console.info('Update product');
   };
 
-  const deleteProduct = () => {
+  const deleteProduct = (e: any) => {
+    console.log(e.target);
     console.info('Deleting product');
   };
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await productService.get('/products', {
+      const { data } = await service.get('/products', {
         params: { user_id: 5 },
+        // TODO change hard coded user_id by GoogleUserId
       });
 
       setProducts(data);
@@ -58,7 +60,6 @@ const ProductsList: React.FC = () => {
           {products.map((p, i) => (
             <ListItem
               key={p.id_product.toString()}
-              // value={product.id_product}
               secondaryAction={
                 <>
                   <IconButton

@@ -10,20 +10,21 @@ import { useGoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
 
 import { useNavigate } from 'react-router-dom';
+import { User } from '../interfaces/user';
 
 const clientId = `537172157090-ptad5abghsvohc1303953uu9ng47p7h2.apps.googleusercontent.com`;
 
-interface User {
+interface LoggedUser {
   signed: boolean;
-  user: object | null;
+  user: User | null;
   Login(): Promise<void>;
   Logout(): void;
 }
 
-const UserContext = createContext({} as User);
+const UserContext = createContext({} as LoggedUser);
 
 export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [user, setUser] = useState<object | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +43,6 @@ export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
     console.info('Login Success: currentUser:', profileObj);
     setUser(profileObj);
-    
 
     // Navigating to home after authentication
     navigate('/products', { replace: true });
