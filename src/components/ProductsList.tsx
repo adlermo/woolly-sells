@@ -11,11 +11,13 @@ import Typography from '@mui/material/Typography';
 
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import React, { useEffect, useState } from 'react';
 import productService from '../services/products';
 
 import { Product } from '../interfaces/product';
+import { Navigate } from 'react-router-dom';
 
 const ProductsList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -25,6 +27,14 @@ const ProductsList: React.FC = () => {
     padding: 20,
     margin: 20,
   }));
+
+  const updateProduct = () => {
+    return <Navigate to={'products/create'} />;
+  };
+
+  const deleteProduct = () => {
+    console.info('Deleting product');
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -50,9 +60,22 @@ const ProductsList: React.FC = () => {
               key={p.id_product.toString()}
               // value={product.id_product}
               secondaryAction={
-                <IconButton edge="end" aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
+                <>
+                  <IconButton
+                    edge="end"
+                    onClick={updateProduct}
+                    aria-label="edit"
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    edge="end"
+                    onClick={deleteProduct}
+                    aria-label="delete"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </>
               }
             >
               <ListItemAvatar>

@@ -4,4 +4,5 @@ export interface Product {
   description: string;
   price: number;
   published_at: Date;
+  user_id: number;
 }

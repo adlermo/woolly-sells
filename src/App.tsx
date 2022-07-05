@@ -31,6 +31,7 @@ function App() {
               />
             }
           />
+          <Route path="*" element={<Navigate to={'products'} />} />
         </Routes>
       </UserProvider>
     </>
